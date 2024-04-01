@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        }
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 4rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: none;
+            align-items: center;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        form {
+            display: none;
+            gap: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px square #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #007bff;
+        }
+
+        /* Task items */
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .task-item.completed {
+            text-decoration: line-through;
+        }
+        .task-item .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Customize task category styles */
+        .work {
+            color: #007bff;
+        }
+
+        .personal {
+            color: #ff9900;
+        }
+
+        .shopping {
+            color: #009933;
+        }
+
+        /* Customize task priority styles */
+        .high-priority {
+            color: red;
+            font-weight: bold;
+        }
+
+        .medium-priority {
+            color: orange;
+        }
+
+        .low-priority {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header><h1>Task Manager</h1></header>
+    <div class="container">
+        <label for="task">New Task:</label>
+        <input type="text" id="task" placeholder="Enter task...">
+        <select id="category">
+            <label for="task">New Task:</label>
+            <option value="Work">Work</option>
+            <option value="School">School</option>
+            <option value="Personal">Personal</option>
+        </select>
+        <select id="priority">
+            <label for="value">Priority</label>
+            <option value="High Priority">High Priority</option>
+            <option value="Medium Priority">Medium Priority</option>
+            <option value="Low Priority">Low Priority</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <div class="container">
+        <ul class="task-list" id="taskList">
+            <!-- Task items will be added dynamically using JavaScript -->
+        </ul>
+    </div>
+
+    <script>
+        const taskList = document.getElementById("taskList");
+
+        function addTask() {
+            const taskInput = document.getElementById("task");
+            const categoryInput = document.getElementById("category");
+            const priorityInput = document.getElementById("priority");
+
+            const task = taskInput.value;
+            const category = categoryInput.value;
+            const priority = priorityInput.value;
+
+
+            if (task) {
+                const taskItem = document.createElement("li");
+                taskItem.classList.add("task-item");
+                taskItem.innerHTML = `
+                    <span>${task}</span>
+                    <span>${category}</span>
+                    <span>${priority}</span>
+                    <div class="actions">
+                        <button onclick="markCompleted(this)">Mark Commpleted</button>
+                        <button onclick="removeTask(this)">Remove</button>
+                    </div>
+                `;
+                taskList.appendChild(taskItem);
+                taskInput.value = "";
+            }
+        }
+
+        function markCompleted(button) {
+            const taskItem = button.closest(".task-item");
+            taskItem.classList.toggle("completed");
+        }
+
+        function removeTask(button) {
+            const taskItem = button.closest(".task-item");
+            taskItem.remove();
+        }
+    </script>
+</body>
+</html>
